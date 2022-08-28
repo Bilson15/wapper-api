@@ -18,17 +18,19 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "cliente")
-public class Cliente implements Serializable {
+@Table(name = "empresa")
+public class Empresa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_cliente")
+	@Column(name = "id_empresa")
 	private long id;
-	@Column
+	
+	@Column(name = "razao_social")
 	@NotNull
-	private String nome;
+	private String razaoSocial;
 	
 	@Column
 	@NotNull
@@ -38,21 +40,21 @@ public class Cliente implements Serializable {
 	@NotNull
 	private String senha;
 	
-	@Column(name = "data_nascimento")
+	@Column(name = "data_fundacao")
 	@NotNull
-	private Date dataNascimento;
+	private Date dataFundacao;
 	
 	@Column
 	@NotNull
-	private String cpf;
+	private String cnpj;
 	
-	@Column
+	@Column(name = "ramo_atividade")
 	@NotNull
-	private String sexo;
+	private String ramoAtividade;
 	
-	@Column(name = "status_cliente")
+	@Column(name = "status_empresa")
 	@NotNull
-	private int statusCliente;
+	private int statusEmpresa;
 	
 	
 	@OneToMany(cascade=CascadeType.ALL)
@@ -63,8 +65,8 @@ public class Cliente implements Serializable {
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_endereco")
 	List<Endereco> endereco;
-	
-	
+
+
 	public List<Endereco> getEndereco() {
 		return endereco;
 	}
@@ -75,17 +77,7 @@ public class Cliente implements Serializable {
 	}
 
 
-	public List<TelefoneCliente> getTelefoneCliente() {
-		return telefoneCliente;
-	}
-
-
-	public void setTelefoneCliente(List<TelefoneCliente> telefoneCliente) {
-		this.telefoneCliente = telefoneCliente;
-	}
-
-
-	public Cliente() {
+	public Empresa() {
 		this.telefoneCliente = new ArrayList<>();
 		this.endereco = new ArrayList<>();
 	}
@@ -101,13 +93,13 @@ public class Cliente implements Serializable {
 	}
 
 
-	public String getNome() {
-		return nome;
+	public String getRazaoSocial() {
+		return razaoSocial;
 	}
 
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setRazaoSocial(String razaoSocial) {
+		this.razaoSocial = razaoSocial;
 	}
 
 
@@ -131,50 +123,63 @@ public class Cliente implements Serializable {
 	}
 
 
-	public Date getData_nascimento() {
-		return dataNascimento;
+	public Date getDataFundacao() {
+		return dataFundacao;
 	}
 
 
-	public void setData_nascimento(Date data_nascimento) {
-		this.dataNascimento = data_nascimento;
+	public void setDataFundacao(Date dataFundacao) {
+		this.dataFundacao = dataFundacao;
 	}
 
 
-	public String getCpf() {
-		return cpf;
+	public String getCnpj() {
+		return cnpj;
 	}
 
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
 
-	public String getSexo() {
-		return sexo;
+	public String getRamoAtividade() {
+		return ramoAtividade;
 	}
 
 
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
+	public void setRamoAtividade(String ramoAtividade) {
+		this.ramoAtividade = ramoAtividade;
 	}
 
 
-	public int getStatus_cliente() {
-		return statusCliente;
+	public int getStatusEmpresa() {
+		return statusEmpresa;
 	}
 
 
-	public void setStatus_cliente(int status_cliente) {
-		this.statusCliente = status_cliente;
+	public void setStatusEmpresa(int statusEmpresa) {
+		this.statusEmpresa = statusEmpresa;
 	}
 
+
+	public List<TelefoneCliente> getTelefoneCliente() {
+		return telefoneCliente;
+	}
+
+
+	public void setTelefoneCliente(List<TelefoneCliente> telefoneCliente) {
+		this.telefoneCliente = telefoneCliente;
+	}
+	
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cpf, dataNascimento, email, id, nome, senha, sexo, statusCliente);
+		return Objects.hash(cnpj, dataFundacao, email, id, ramoAtividade, razaoSocial, senha, statusEmpresa,
+				telefoneCliente);
 	}
+
+
 
 
 	@Override
@@ -185,13 +190,13 @@ public class Cliente implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cliente other = (Cliente) obj;
-		return Objects.equals(cpf, other.cpf) && Objects.equals(dataNascimento, other.dataNascimento)
-				&& Objects.equals(email, other.email) && id == other.id && Objects.equals(nome, other.nome)
-				&& Objects.equals(senha, other.senha) && Objects.equals(sexo, other.sexo)
-				&& statusCliente == other.statusCliente;
+		Empresa other = (Empresa) obj;
+		return Objects.equals(cnpj, other.cnpj) && Objects.equals(dataFundacao, other.dataFundacao)
+				&& Objects.equals(email, other.email) && id == other.id
+				&& Objects.equals(ramoAtividade, other.ramoAtividade) && Objects.equals(razaoSocial, other.razaoSocial)
+				&& Objects.equals(senha, other.senha) && statusEmpresa == other.statusEmpresa
+				&& Objects.equals(telefoneCliente, other.telefoneCliente);
 	}
 	
-	
-	
+
 }

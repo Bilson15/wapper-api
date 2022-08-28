@@ -39,7 +39,8 @@ public class ClienteService {
 		clienteRepo.setSexo(cliente.getSexo());
 		clienteRepo.setStatus_cliente(cliente.getStatus_cliente());
 		
-		return repository.save(cliente);
+		
+		return repository.save(clienteRepo);
 	}
 	
 	
