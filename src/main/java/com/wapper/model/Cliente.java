@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,7 +28,7 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_cliente")
-	private long id;
+	private long idCliente;
 	@Column
 	@NotNull
 	private String nome;
@@ -54,51 +57,33 @@ public class Cliente implements Serializable {
 	@NotNull
 	private int statusCliente;
 	
-	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="id_telefone_cliente")
+	@JsonManagedReference
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	List<TelefoneCliente> telefoneCliente;
 	
-	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="id_endereco")
+	@JsonManagedReference
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	List<Endereco> endereco;
 	
 	
-	public List<Endereco> getEndereco() {
-		return endereco;
-	}
-
-
-	public void setEndereco(List<Endereco> endereco) {
-		this.endereco = endereco;
-	}
-
-
-	public List<TelefoneCliente> getTelefoneCliente() {
-		return telefoneCliente;
-	}
-
-
-	public void setTelefoneCliente(List<TelefoneCliente> telefoneCliente) {
-		this.telefoneCliente = telefoneCliente;
-	}
-
-
 	public Cliente() {
 		this.telefoneCliente = new ArrayList<>();
 		this.endereco = new ArrayList<>();
 	}
 
 
-	public long getId() {
-		return id;
+
+	public long getIdCliente() {
+		return idCliente;
 	}
 
 
-	public void setId(long id) {
-		this.id = id;
+
+	public void setIdCliente(long idCliente) {
+		this.idCliente = idCliente;
 	}
+
+
 
 
 	public String getNome() {
@@ -106,9 +91,11 @@ public class Cliente implements Serializable {
 	}
 
 
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 
 
 	public String getEmail() {
@@ -116,9 +103,11 @@ public class Cliente implements Serializable {
 	}
 
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 
 
 	public String getSenha() {
@@ -126,19 +115,23 @@ public class Cliente implements Serializable {
 	}
 
 
+
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 
 
-	public Date getData_nascimento() {
+
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
 
-	public void setData_nascimento(Date data_nascimento) {
-		this.dataNascimento = data_nascimento;
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
+
 
 
 	public String getCpf() {
@@ -146,9 +139,11 @@ public class Cliente implements Serializable {
 	}
 
 
+
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+
 
 
 	public String getSexo() {
@@ -156,24 +151,54 @@ public class Cliente implements Serializable {
 	}
 
 
+
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 
 
-	public int getStatus_cliente() {
+
+	public int getStatusCliente() {
 		return statusCliente;
 	}
 
 
-	public void setStatus_cliente(int status_cliente) {
-		this.statusCliente = status_cliente;
+
+	public void setStatusCliente(int statusCliente) {
+		this.statusCliente = statusCliente;
 	}
+
+
+
+	public List<TelefoneCliente> getTelefoneCliente() {
+		return this.telefoneCliente;
+	}
+
+
+
+	public void setTelefoneCliente(List<TelefoneCliente> telefoneCliente) {
+		//telefoneCliente.forEach(child -> child.setCliente(this));
+		this.telefoneCliente = telefoneCliente;
+	}
+
+
+
+	public List<Endereco> getEndereco() {
+		return endereco;
+	}
+
+
+
+	public void setEndereco(List<Endereco> endereco) {
+		//endereco.forEach(child -> child.setCliente(this));
+		this.endereco = endereco;
+	}
+
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cpf, dataNascimento, email, id, nome, senha, sexo, statusCliente);
+		return Objects.hash(cpf, dataNascimento, email, idCliente, nome, senha, sexo, statusCliente);
 	}
 
 
@@ -187,7 +212,7 @@ public class Cliente implements Serializable {
 			return false;
 		Cliente other = (Cliente) obj;
 		return Objects.equals(cpf, other.cpf) && Objects.equals(dataNascimento, other.dataNascimento)
-				&& Objects.equals(email, other.email) && id == other.id && Objects.equals(nome, other.nome)
+				&& Objects.equals(email, other.email) && idCliente == other.idCliente && Objects.equals(nome, other.nome)
 				&& Objects.equals(senha, other.senha) && Objects.equals(sexo, other.sexo)
 				&& statusCliente == other.statusCliente;
 	}
