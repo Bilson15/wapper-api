@@ -3,11 +3,16 @@ package com.wapper.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -19,7 +24,7 @@ public class TelefoneCliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_telefone_cliente")
-	private long id;
+	private long idTelefoneCliente;
 	
 	@Column
 	@NotNull
@@ -32,19 +37,36 @@ public class TelefoneCliente implements Serializable {
 	@Column(name = "status_telefone")
 	@NotNull
 	private int statusTelefone;
+	
+	@JsonBackReference
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="id_cliente")
+	Cliente cliente;
 
 
 	public TelefoneCliente() {
 	}
 
 
-	public long getId() {
-		return id;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
 
-	public void setId(long id) {
-		this.id = id;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+
+
+
+	public long getIdTelefoneCliente() {
+		return idTelefoneCliente;
+	}
+
+
+	public void setIdTelefoneCliente(long idTelefoneCliente) {
+		this.idTelefoneCliente = idTelefoneCliente;
 	}
 
 
@@ -80,7 +102,7 @@ public class TelefoneCliente implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ddd, id, statusTelefone, telefone);
+		return Objects.hash(ddd, idTelefoneCliente, statusTelefone, telefone);
 	}
 
 
@@ -93,7 +115,7 @@ public class TelefoneCliente implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		TelefoneCliente other = (TelefoneCliente) obj;
-		return ddd == other.ddd && id == other.id && statusTelefone == other.statusTelefone
+		return ddd == other.ddd && idTelefoneCliente == other.idTelefoneCliente && statusTelefone == other.statusTelefone
 				&& telefone == other.telefone;
 	}
 	

@@ -3,11 +3,16 @@ package com.wapper.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -20,7 +25,7 @@ public class Endereco implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_endereco")
-	private long id;
+	private long idEndereco;
 	
 	@Column
 	@NotNull
@@ -38,17 +43,50 @@ public class Endereco implements Serializable {
 	@Column(name = "status_endereco")
 	@NotNull
 	private int statusEndereco;
+	
+	@Column
+	@NotNull
+	private String bairro;
+	
+	@JsonBackReference
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="id_cliente")
+	Cliente cliente;
 
 	public Endereco() {
 	}
+	
 
-	public long getId() {
-		return id;
+	public String getBairro() {
+		return bairro;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
 	}
+
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+
+
+	public long getIdEndereco() {
+		return idEndereco;
+	}
+
+
+	public void setIdEndereco(long idEndereco) {
+		this.idEndereco = idEndereco;
+	}
+
 
 	public String getLogradouro() {
 		return logradouro;
@@ -92,7 +130,7 @@ public class Endereco implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cep, complemento, id, logradouro, numero, statusEndereco);
+		return Objects.hash(cep, complemento, idEndereco, logradouro, numero, statusEndereco);
 	}
 
 	@Override
@@ -104,7 +142,7 @@ public class Endereco implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Endereco other = (Endereco) obj;
-		return cep == other.cep && Objects.equals(complemento, other.complemento) && id == other.id
+		return cep == other.cep && Objects.equals(complemento, other.complemento) && idEndereco == other.idEndereco
 				&& Objects.equals(logradouro, other.logradouro) && Objects.equals(numero, other.numero)
 				&& statusEndereco == other.statusEndereco;
 	}

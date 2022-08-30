@@ -14,6 +14,7 @@ public class ClienteService {
 	@Autowired
 	ClienteRepository repository;
 	
+	
 	public List<Cliente> findAll() {
 		return repository.findAll();	
 	}
@@ -24,20 +25,21 @@ public class ClienteService {
 	
 	
 	public Cliente create(Cliente cliente) {
+		
 		return repository.save(cliente);
 	}
 	
 	public Cliente update(Cliente cliente) {
 		
-		Cliente clienteRepo = repository.findById(cliente.getId()).orElseThrow(null);
+		Cliente clienteRepo = repository.findById(cliente.getIdCliente()).orElseThrow(null);
 		
 		clienteRepo.setCpf(cliente.getCpf());
-		clienteRepo.setData_nascimento(cliente.getData_nascimento());
+		clienteRepo.setDataNascimento(cliente.getDataNascimento());
 		clienteRepo.setEmail(cliente.getEmail());
 		clienteRepo.setNome(cliente.getNome());
 		clienteRepo.setSenha(cliente.getSenha());
 		clienteRepo.setSexo(cliente.getSexo());
-		clienteRepo.setStatus_cliente(cliente.getStatus_cliente());
+		clienteRepo.setStatusCliente(cliente.getStatusCliente());
 		
 		
 		return repository.save(clienteRepo);

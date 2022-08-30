@@ -1,5 +1,7 @@
 package com.wapper.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,23 @@ public class TelefoneClienteService {
 	TelefoneClienteRepository repository;
 	
 	
+	public List<TelefoneCliente> findAll() {
+		return repository.findAll();	
+	}
+	
+	public TelefoneCliente findById(Long id) {
+		return repository.findById(id).orElseThrow(null);
+	}
+	
+	
 	public TelefoneCliente create(TelefoneCliente telefoneCliente) {
+		
 		return repository.save(telefoneCliente);
+	}
+	
+	
+	public void delete(Long id) {
+		TelefoneCliente telefoneRepo = repository.findById(id).orElseThrow(null);
+		repository.delete(telefoneRepo);
 	}
 }
