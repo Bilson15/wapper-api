@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wapper.model.Cliente;
 import com.wapper.model.Empresa;
 import com.wapper.repositories.EmpresaRepository;
 
