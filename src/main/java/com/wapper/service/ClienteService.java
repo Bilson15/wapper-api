@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wapper.exceptions.GenericException;
 import com.wapper.model.Cliente;
 import com.wapper.repositories.ClienteRepository;
 
@@ -24,9 +25,16 @@ public class ClienteService {
 	}
 	
 	
-	public Cliente create(Cliente cliente) {
+	public Cliente create(Cliente cliente) throws Exception {
+		List<Cliente> result = repository.findByEmail(cliente.getEmail());
 		
-		return repository.save(cliente);
+		if(!result.isEmpty()) {
+			throw new GenericException("E-mail já cadastrado");
+		}else {
+			return repository.save(cliente);
+		}
+		
+		
 	}
 	
 	public Cliente update(Cliente cliente) {

@@ -60,15 +60,12 @@ public class Empresa implements Serializable {
 	private int statusEmpresa;
 	
 
-	@JsonManagedReference
 	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<TelefoneCliente> telefoneCliente;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Endereco> endereco;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Servico> servico;
 

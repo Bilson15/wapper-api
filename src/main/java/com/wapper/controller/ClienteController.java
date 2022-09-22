@@ -35,7 +35,7 @@ public class ClienteController {
 	
 	
 	@PostMapping
-	public Cliente create(@RequestBody Cliente cliente) {
+	public Cliente create(@RequestBody Cliente cliente) throws Exception {
 		return service.create(cliente);
 	}
 	

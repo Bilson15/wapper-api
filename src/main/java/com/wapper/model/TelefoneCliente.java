@@ -44,7 +44,6 @@ public class TelefoneCliente implements Serializable {
 	Cliente cliente;
 	
 	
-	@JsonBackReference
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_empresa")
 	Empresa empresa;

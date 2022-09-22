@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wapper.exceptions.GenericException;
 import com.wapper.model.Empresa;
 import com.wapper.repositories.EmpresaRepository;
 
@@ -16,8 +17,14 @@ public class EmpresaService {
 	EmpresaRepository repository;
 	
 	
-	public List<Empresa> findAll() {
-		return repository.findAll();	
+	public List<Empresa> findAll() throws Exception {
+		List<Empresa> result = repository.findAll();
+		if(result.isEmpty()) {
+			throw new GenericException("Nenhuma empresa encontrada");
+		}else {
+			return result;
+		}
+		
 	}
 	
 	public Empresa findById(Long id) {

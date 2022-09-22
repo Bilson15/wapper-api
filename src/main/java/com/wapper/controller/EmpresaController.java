@@ -30,7 +30,7 @@ public class EmpresaController {
 	 
 	
 	@GetMapping
-	public List<Empresa> findAll() {
+	public List<Empresa> findAll() throws Exception {
 		return service.findAll();
 	}
 	
