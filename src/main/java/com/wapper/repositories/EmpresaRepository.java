@@ -7,5 +7,4 @@ import com.wapper.model.Empresa;
 
 @Repository
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
-
 }

@@ -1,10 +1,17 @@
 package com.wapper.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.wapper.dto.ClienteDTO;
 import com.wapper.exceptions.GenericException;
 import com.wapper.model.Cliente;
 import com.wapper.repositories.ClienteRepository;
@@ -16,46 +23,43 @@ public class ClienteService {
 	ClienteRepository repository;
 	
 	
-	public List<Cliente> findAll() {
-		return repository.findAll();	
+	public Page<ClienteDTO> findAll(Pageable page) {
+		Page<Cliente> clientePage = repository.findAll(page);
+		
+		List<Cliente> result = clientePage.getContent();
+		List<ClienteDTO> dto = new ArrayList<>();
+		for(Cliente cliente : result) {
+			dto.add(new ClienteDTO(cliente));
+		}	
+		
+		
+	        PageRequest pageRequest = PageRequest.of(
+	        		page.getPageNumber(),
+	                page.getPageSize(),
+	                Sort.Direction.ASC,
+	                "name");
+	        return new PageImpl<>(
+	        		dto, 
+	                pageRequest, page.getPageSize());
+		
+		
+	
 	}
 	
-	public Cliente findById(Long id) {
-		return repository.findById(id).orElseThrow(null);
+	public ClienteDTO findById(Long id) {
+		Cliente cliente = repository.findById(id).orElseThrow(() ->  new GenericException("Cliente " + id + " não encontrado"));
+		return new ClienteDTO(repository.save(cliente));
 	}
 	
 	
-	public Cliente create(Cliente cliente) throws Exception {
+	public ClienteDTO create(Cliente cliente) throws Exception {
 		List<Cliente> result = repository.findByEmail(cliente.getEmail());
 		
 		if(!result.isEmpty()) {
 			throw new GenericException("E-mail já cadastrado");
 		}else {
-			return repository.save(cliente);
+			return  new ClienteDTO(repository.save(cliente));
 		}
-		
-		
 	}
 	
-	public Cliente update(Cliente cliente) {
-		
-		Cliente clienteRepo = repository.findById(cliente.getIdCliente()).orElseThrow(null);
-		
-		clienteRepo.setCpf(cliente.getCpf());
-		clienteRepo.setDataNascimento(cliente.getDataNascimento());
-		clienteRepo.setEmail(cliente.getEmail());
-		clienteRepo.setNome(cliente.getNome());
-		clienteRepo.setSenha(cliente.getSenha());
-		clienteRepo.setSexo(cliente.getSexo());
-		clienteRepo.setStatusCliente(cliente.getStatusCliente());
-		
-		
-		return repository.save(clienteRepo);
-	}
-	
-	
-	public void delete(Long id) {
-		Cliente clienteRepo = repository.findById(id).orElseThrow(null);
-		repository.delete(clienteRepo);
-	}
 }
