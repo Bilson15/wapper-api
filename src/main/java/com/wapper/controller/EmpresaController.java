@@ -1,0 +1,54 @@
+package com.wapper.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wapper.dto.EmpresaDTO;
+import com.wapper.model.Empresa;
+import com.wapper.service.EmpresaService;
+
+@RestController
+@RequestMapping("/empresa")
+public class EmpresaController {
+	
+	@Autowired
+	private EmpresaService service;
+
+	@GetMapping(value = "/{id}")
+	public Empresa findById(@PathVariable(value = "id") Long id) {
+		return service.findById(id);
+	}
+	 
+	
+	@GetMapping
+	public Page<EmpresaDTO> findAll(@RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "10") int size) throws Exception {
+		return service.findAll(PageRequest.of(page, size));
+	}
+	
+	
+	@PostMapping
+	public Empresa create(@RequestBody Empresa empresa) {
+		return service.create(empresa);
+	}
+	
+	@PutMapping
+	public Empresa update(@RequestBody Empresa empresa) {
+		return service.update(empresa);
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public void delete(@PathVariable(value = "id") Long id) {
+		service.delete(id);
+	}
+}

@@ -52,6 +52,11 @@ public class Endereco implements Serializable {
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_cliente")
 	Cliente cliente;
+	
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="id_empresa")
+	Empresa empresa;
 
 	public Endereco() {
 	}
@@ -127,6 +132,18 @@ public class Endereco implements Serializable {
 	public void setStatusEndereco(int statusEndereco) {
 		this.statusEndereco = statusEndereco;
 	}
+	
+	
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
 
 	@Override
 	public int hashCode() {

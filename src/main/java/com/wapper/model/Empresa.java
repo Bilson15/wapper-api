@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -56,15 +59,43 @@ public class Empresa implements Serializable {
 	@NotNull
 	private int statusEmpresa;
 	
+
+	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<TelefoneCliente> telefoneCliente;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="id_telefone_cliente")
-	List<TelefoneCliente> telefoneCliente;
+	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<Endereco> endereco;
+	
+	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<Servico> servico;
+
+
+
+	public Empresa() {
+		this.telefoneCliente = new ArrayList<>();
+		this.endereco = new ArrayList<>();
+		this.servico = new ArrayList<>();
+	}
+	
+
+
+	public List<Servico> getServico() {
+		return servico;
+	}
+
+
+
+	public void setServico(List<Servico> servico) {
+		this.servico = servico;
+	}
+
+
+
+	public long getId() {
+		return id;
+	}
 	
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="id_endereco")
-	List<Endereco> endereco;
 
 
 	public List<Endereco> getEndereco() {
@@ -74,17 +105,6 @@ public class Empresa implements Serializable {
 
 	public void setEndereco(List<Endereco> endereco) {
 		this.endereco = endereco;
-	}
-
-
-	public Empresa() {
-		this.telefoneCliente = new ArrayList<>();
-		this.endereco = new ArrayList<>();
-	}
-
-
-	public long getId() {
-		return id;
 	}
 
 
@@ -171,14 +191,14 @@ public class Empresa implements Serializable {
 	public void setTelefoneCliente(List<TelefoneCliente> telefoneCliente) {
 		this.telefoneCliente = telefoneCliente;
 	}
-	
+
+
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cnpj, dataFundacao, email, id, ramoAtividade, razaoSocial, senha, statusEmpresa,
-				telefoneCliente);
+		return Objects.hash(cnpj, dataFundacao, email, endereco, id, servico, ramoAtividade, razaoSocial, senha,
+				statusEmpresa, telefoneCliente);
 	}
-
 
 
 
@@ -192,11 +212,15 @@ public class Empresa implements Serializable {
 			return false;
 		Empresa other = (Empresa) obj;
 		return Objects.equals(cnpj, other.cnpj) && Objects.equals(dataFundacao, other.dataFundacao)
-				&& Objects.equals(email, other.email) && id == other.id
+				&& Objects.equals(email, other.email) && Objects.equals(endereco, other.endereco) && id == other.id
+				&& Objects.equals(servico, other.servico)
 				&& Objects.equals(ramoAtividade, other.ramoAtividade) && Objects.equals(razaoSocial, other.razaoSocial)
 				&& Objects.equals(senha, other.senha) && statusEmpresa == other.statusEmpresa
 				&& Objects.equals(telefoneCliente, other.telefoneCliente);
 	}
+	
+
+
 	
 
 }

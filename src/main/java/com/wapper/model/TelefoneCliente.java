@@ -42,6 +42,11 @@ public class TelefoneCliente implements Serializable {
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_cliente")
 	Cliente cliente;
+	
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="id_empresa")
+	Empresa empresa;
 
 
 	public TelefoneCliente() {
@@ -57,7 +62,18 @@ public class TelefoneCliente implements Serializable {
 		this.cliente = cliente;
 	}
 
+	
 
+
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 
 
 	public long getIdTelefoneCliente() {
