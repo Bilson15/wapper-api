@@ -24,15 +24,15 @@ public class EmpresaController {
 	@Autowired
 	private EmpresaService service;
 
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/{id}", produces = "application/json;charset=UTF-8")
 	public Empresa findById(@PathVariable(value = "id") Long id) {
 		return service.findById(id);
 	}
 	 
 	
-	@GetMapping
+	@GetMapping(produces = "application/json;charset=UTF-8")
 	public Page<EmpresaDTO> findAll(@RequestParam(defaultValue = "0") int page,
-	        @RequestParam(defaultValue = "10") int size) throws Exception {
+	        @RequestParam(defaultValue = "20") int size) throws Exception {
 		return service.findAll(PageRequest.of(page, size));
 	}
 	
