@@ -9,9 +9,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.wapper.dto.ClienteDTO;
+import com.wapper.dto.LoginDTO;
 import com.wapper.exceptions.GenericException;
 import com.wapper.model.Cliente;
 import com.wapper.repositories.ClienteRepository;
@@ -53,13 +56,29 @@ public class ClienteService {
 	
 	
 	public ClienteDTO create(Cliente cliente) throws Exception {
-		List<Cliente> result = repository.findByEmail(cliente.getEmail());
+		Cliente result = repository.findByEmail(cliente.getEmail());
 		
-		if(!result.isEmpty()) {
+		if(result == null) {
 			throw new GenericException("E-mail já cadastrado");
 		}else {
 			return  new ClienteDTO(repository.save(cliente));
 		}
 	}
+	
+	
+	public ResponseEntity<ClienteDTO> login(LoginDTO loginDTO) {
+        Cliente cliente = repository.findByEmail(loginDTO.getEmail());
+        if(cliente == null) {
+            throw new GenericException("E-mail ou senha incorreto");
+        }
+        if(!cliente.getSenha().equals(loginDTO.getSenha())){
+        	 throw new GenericException("E-mail ou senha incorreto");
+        }
+        
+        
+        return new ResponseEntity<ClienteDTO>(new ClienteDTO(repository.save(cliente)), HttpStatus.OK);
+	}
+	
+	
 	
 }
