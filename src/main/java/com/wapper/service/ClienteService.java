@@ -58,7 +58,7 @@ public class ClienteService {
 	public ClienteDTO create(Cliente cliente) throws Exception {
 		Cliente result = repository.findByEmail(cliente.getEmail());
 		
-		if(result == null) {
+		if(result != null) {
 			throw new GenericException("E-mail já cadastrado");
 		}else {
 			return  new ClienteDTO(repository.save(cliente));
