@@ -1,18 +1,27 @@
 package com.wapper.model;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Time;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
+
+
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -24,88 +33,103 @@ public class Pedido implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pedido")
-	private long id;
+	private long id_pedido;
 	
 	@Column
 	@NotNull
-	private String valor_pedido;
+	private double valor_pedido;
 	
 	@Column
 	@NotNull
-	private String horario;
+	private Time horario_marcado;
 	
 	@Column
 	@NotNull
+	private Date dia_marcado;
+	
+	@Column
 	private String observacao;
 	
 	
-	@JsonBackReference
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="id_cliente")
-	Cliente cliente;
+	private Cliente cliente;
 	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "id_pedido", nullable = false, updatable = false, insertable = true)
+	private List<ItemPedido> itemPedido = new ArrayList<>();
 	
 
 	public long getId() {
-		return id;
+		return id_pedido;
 	}
-
 
 	public void setId(long id) {
-		this.id = id;
+		this.id_pedido = id;
 	}
 
-
-	public String getValor_pedido() {
+	public double getValor_pedido() {
 		return valor_pedido;
 	}
 
-
-	public void setValor_pedido(String valor_pedido) {
+	public void setValor_pedido(double valor_pedido) {
 		this.valor_pedido = valor_pedido;
 	}
 
-
-	public String getHorario() {
-		return horario;
+	public Time getHorario_marcado() {
+		return horario_marcado;
 	}
 
-
-	public void setHorario(String horario) {
-		this.horario = horario;
+	public void setHorario_marcado(Time horario_marcado) {
+		this.horario_marcado = horario_marcado;
 	}
 
+	public Date getDia_marcado() {
+		return dia_marcado;
+	}
+
+	public void setDia_marcado(Date dia_marcado) {
+		this.dia_marcado = dia_marcado;
+	}
 
 	public String getObservacao() {
 		return observacao;
 	}
 
-
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
 
-
 	public Cliente getCliente() {
 		return cliente;
 	}
-
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+
+	public long getId_pedido() {
+		return id_pedido;
 	}
 
+	public void setId_pedido(long id_pedido) {
+		this.id_pedido = id_pedido;
+	}
+
+	public List<ItemPedido> getItemPedido() {
+		return itemPedido;
+	}
+
+	public void setItemPedido(List<ItemPedido> itemPedido) {
+		this.itemPedido = itemPedido;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cliente, horario, id, observacao, valor_pedido);
+		return Objects.hash(cliente, dia_marcado, horario_marcado, id_pedido, itemPedido, observacao, valor_pedido);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -116,10 +140,21 @@ public class Pedido implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Pedido other = (Pedido) obj;
-		return Objects.equals(cliente, other.cliente) && Objects.equals(horario, other.horario) && id == other.id
-				&& Objects.equals(observacao, other.observacao) && Objects.equals(valor_pedido, other.valor_pedido);
+		return Objects.equals(cliente, other.cliente) && Objects.equals(dia_marcado, other.dia_marcado)
+				&& Objects.equals(horario_marcado, other.horario_marcado) && id_pedido == other.id_pedido
+				&& Objects.equals(itemPedido, other.itemPedido) && Objects.equals(observacao, other.observacao)
+				&& Double.doubleToLongBits(valor_pedido) == Double.doubleToLongBits(other.valor_pedido);
 	}
 	
+	
+
+
+
+
+
+
+
+
 	
 
 }
