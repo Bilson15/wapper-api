@@ -46,7 +46,11 @@ public class Profissional implements Serializable {
 	
 	@Column
 	@NotNull
-	private Time horario_disponibilidade;
+	private Time inicio_atendimento;
+	
+	@Column
+	@NotNull
+	private Time fim_atendimento;
 	
 	
 	  @ManyToMany
@@ -138,16 +142,32 @@ public class Profissional implements Serializable {
 
 
 
-	public Time getHorario_disponibilidade() {
-		return horario_disponibilidade;
+	public Time getInicio_atendimento() {
+		return inicio_atendimento;
 	}
 
 
 
 
 
-	public void setHorario_disponibilidade(Time horario_disponibilidade) {
-		this.horario_disponibilidade = horario_disponibilidade;
+	public void setInicio_atendimento(Time inicio_atendimento) {
+		this.inicio_atendimento = inicio_atendimento;
+	}
+
+
+
+
+
+	public Time getFim_atendimento() {
+		return fim_atendimento;
+	}
+
+
+
+
+
+	public void setFim_atendimento(Time fim_atendimento) {
+		this.fim_atendimento = fim_atendimento;
 	}
 
 
@@ -172,7 +192,8 @@ public class Profissional implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(horario_disponibilidade, id_profissional, nome, resumo, servico, status_profissional);
+		return Objects.hash(fim_atendimento, id_profissional, inicio_atendimento, nome, resumo, servico,
+				status_profissional);
 	}
 
 
@@ -188,11 +209,17 @@ public class Profissional implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Profissional other = (Profissional) obj;
-		return Objects.equals(horario_disponibilidade, other.horario_disponibilidade)
-				&& Objects.equals(id_profissional, other.id_profissional) && Objects.equals(nome, other.nome)
+		return Objects.equals(fim_atendimento, other.fim_atendimento)
+				&& Objects.equals(id_profissional, other.id_profissional)
+				&& Objects.equals(inicio_atendimento, other.inicio_atendimento) && Objects.equals(nome, other.nome)
 				&& Objects.equals(resumo, other.resumo) && Objects.equals(servico, other.servico)
 				&& status_profissional == other.status_profissional;
 	}
+
+
+
+
+
 
 
 
