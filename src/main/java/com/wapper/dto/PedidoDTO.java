@@ -20,6 +20,7 @@ public class PedidoDTO {
 	private Time horario_marcado;
 	private Date dia_marcado;
 	private String observacao;
+	private int status;
 	private Cliente cliente;
 	private List<ItemPedidoDTO> itemPedido;
 	
@@ -31,7 +32,7 @@ public class PedidoDTO {
 	
 	
 	public PedidoDTO(long id, double valor_pedido, Time horario_marcado, Date dia_marcado, String observacao,
-			Cliente cliente, List<ItemPedidoDTO> itemPedido) {
+			Cliente cliente, List<ItemPedidoDTO> itemPedido, int status) {
 
 		this.id = id;
 		this.valor_pedido = valor_pedido;
@@ -40,6 +41,7 @@ public class PedidoDTO {
 		this.observacao = observacao;
 		this.cliente = cliente;
 		this.itemPedido = itemPedido;
+		this.status = status;
 	}
 	
 	
@@ -52,6 +54,7 @@ public class PedidoDTO {
 		this.dia_marcado = pedido.getDia_marcado();
 		this.observacao = pedido.getObservacao();
 		this.cliente = pedido.getCliente();
+		this.status = pedido.getStatus();
 		
 		for(ItemPedido item : pedido.getItemPedido()) {
 			items.add(new ItemPedidoDTO(item));
@@ -65,6 +68,18 @@ public class PedidoDTO {
 	
 	
 	
+	
+	
+	public int getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+
 	public long getId() {
 		return id;
 	}

@@ -50,6 +50,9 @@ public class Pedido implements Serializable {
 	@Column
 	private String observacao;
 	
+	@Column
+	private int status;
+	
 	
 	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="id_cliente")
@@ -124,6 +127,16 @@ public class Pedido implements Serializable {
 
 	public void setItemPedido(List<ItemPedido> itemPedido) {
 		this.itemPedido = itemPedido;
+	}
+	
+	
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	@Override
