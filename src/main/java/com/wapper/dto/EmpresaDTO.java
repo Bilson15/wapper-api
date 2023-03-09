@@ -1,10 +1,12 @@
 package com.wapper.dto;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.wapper.model.Empresa;
 import com.wapper.model.Endereco;
+import com.wapper.model.ItemPedido;
 import com.wapper.model.Servico;
 import com.wapper.model.TelefoneCliente;
 
@@ -26,7 +28,7 @@ public class EmpresaDTO {
 
 	private List<TelefoneCliente> telefoneCliente;
 
-	private List<Endereco> endereco;
+	private List<EnderecoDTO> endereco;
 
 	private List<Servico> servico;
 	
@@ -34,6 +36,7 @@ public class EmpresaDTO {
 	
 
 	public EmpresaDTO(Empresa empresa) {
+		List<EnderecoDTO> enderecos = new ArrayList<>();
 		this.id = empresa.getId();
 		this.razaoSocial = empresa.getRazaoSocial();
 		this.email = empresa.getEmail();
@@ -42,7 +45,11 @@ public class EmpresaDTO {
 		this.ramoAtividade = empresa.getRamoAtividade();
 		this.statusEmpresa = empresa.getStatusEmpresa();
 		this.telefoneCliente = empresa.getTelefoneCliente();
-		this.endereco = empresa.getEndereco();
+		
+		for(Endereco endereco : empresa.getEndereco()) {
+			enderecos.add(new EnderecoDTO(endereco));
+		}
+		this.endereco = enderecos ;
 		this.servico = empresa.getServico();
 	}
 
@@ -110,11 +117,13 @@ public class EmpresaDTO {
 		this.telefoneCliente = telefoneCliente;
 	}
 
-	public List<Endereco> getEndereco() {
+
+
+	public List<EnderecoDTO> getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(List<Endereco> endereco) {
+	public void setEndereco(List<EnderecoDTO> endereco) {
 		this.endereco = endereco;
 	}
 
