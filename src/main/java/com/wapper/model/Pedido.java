@@ -50,6 +50,12 @@ public class Pedido implements Serializable {
 	@Column
 	private String observacao;
 	
+	@Column
+	private int status;
+	
+	@ManyToOne(cascade=CascadeType.MERGE)
+	@JoinColumn(name="id_empresa")
+	private Empresa empresa;
 	
 	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="id_cliente")
@@ -107,8 +113,16 @@ public class Pedido implements Serializable {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
 
 
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 
 	public long getId_pedido() {
 		return id_pedido;
@@ -125,10 +139,21 @@ public class Pedido implements Serializable {
 	public void setItemPedido(List<ItemPedido> itemPedido) {
 		this.itemPedido = itemPedido;
 	}
+	
+	
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cliente, dia_marcado, horario_marcado, id_pedido, itemPedido, observacao, valor_pedido);
+		return Objects.hash(cliente, dia_marcado, empresa, horario_marcado, id_pedido, itemPedido, observacao, status,
+				valor_pedido);
 	}
 
 	@Override
@@ -141,10 +166,13 @@ public class Pedido implements Serializable {
 			return false;
 		Pedido other = (Pedido) obj;
 		return Objects.equals(cliente, other.cliente) && Objects.equals(dia_marcado, other.dia_marcado)
-				&& Objects.equals(horario_marcado, other.horario_marcado) && id_pedido == other.id_pedido
-				&& Objects.equals(itemPedido, other.itemPedido) && Objects.equals(observacao, other.observacao)
+				&& Objects.equals(empresa, other.empresa) && Objects.equals(horario_marcado, other.horario_marcado)
+				&& id_pedido == other.id_pedido && Objects.equals(itemPedido, other.itemPedido)
+				&& Objects.equals(observacao, other.observacao) && status == other.status
 				&& Double.doubleToLongBits(valor_pedido) == Double.doubleToLongBits(other.valor_pedido);
 	}
+
+
 	
 	
 

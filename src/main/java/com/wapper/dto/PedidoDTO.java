@@ -20,7 +20,9 @@ public class PedidoDTO {
 	private Time horario_marcado;
 	private Date dia_marcado;
 	private String observacao;
-	private Cliente cliente;
+	private int status;
+	private ClienteDTO cliente;
+	private EmpresaDTO empresa;
 	private List<ItemPedidoDTO> itemPedido;
 	
 	
@@ -31,7 +33,7 @@ public class PedidoDTO {
 	
 	
 	public PedidoDTO(long id, double valor_pedido, Time horario_marcado, Date dia_marcado, String observacao,
-			Cliente cliente, List<ItemPedidoDTO> itemPedido) {
+			ClienteDTO cliente, List<ItemPedidoDTO> itemPedido, int status, EmpresaDTO empresa) {
 
 		this.id = id;
 		this.valor_pedido = valor_pedido;
@@ -40,6 +42,8 @@ public class PedidoDTO {
 		this.observacao = observacao;
 		this.cliente = cliente;
 		this.itemPedido = itemPedido;
+		this.status = status;
+		this.empresa = empresa;
 	}
 	
 	
@@ -51,7 +55,9 @@ public class PedidoDTO {
 		this.horario_marcado = pedido.getHorario_marcado();
 		this.dia_marcado = pedido.getDia_marcado();
 		this.observacao = pedido.getObservacao();
-		this.cliente = pedido.getCliente();
+		this.cliente = new ClienteDTO( pedido.getCliente());
+		this.status = pedido.getStatus();
+		this.empresa = new EmpresaDTO(pedido.getEmpresa());
 		
 		for(ItemPedido item : pedido.getItemPedido()) {
 			items.add(new ItemPedidoDTO(item));
@@ -65,6 +71,29 @@ public class PedidoDTO {
 	
 	
 	
+	
+	
+	
+	public EmpresaDTO getEmpresa() {
+		return empresa;
+	}
+
+
+	public void setEmpresa(EmpresaDTO empresa) {
+		this.empresa = empresa;
+	}
+
+
+	public int getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+
 	public long getId() {
 		return id;
 	}
@@ -95,24 +124,32 @@ public class PedidoDTO {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-	public Cliente getCliente() {
+
+	public ClienteDTO getCliente() {
 		return cliente;
 	}
-	public void setCliente(Cliente cliente) {
+
+
+	public void setCliente(ClienteDTO cliente) {
 		this.cliente = cliente;
 	}
+
+
 	public List<ItemPedidoDTO> getItemPedido() {
 		return itemPedido;
 	}
 	public void setItemPedido(List<ItemPedidoDTO> itemPedido) {
 		this.itemPedido = itemPedido;
 	}
-	
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(cliente, dia_marcado, horario_marcado, id, itemPedido, observacao, valor_pedido);
+		return Objects.hash(cliente, dia_marcado, empresa, horario_marcado, id, itemPedido, observacao, status,
+				valor_pedido);
 	}
-	
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -123,10 +160,13 @@ public class PedidoDTO {
 			return false;
 		PedidoDTO other = (PedidoDTO) obj;
 		return Objects.equals(cliente, other.cliente) && Objects.equals(dia_marcado, other.dia_marcado)
-				&& Objects.equals(horario_marcado, other.horario_marcado) && id == other.id
-				&& Objects.equals(itemPedido, other.itemPedido) && Objects.equals(observacao, other.observacao)
+				&& Objects.equals(empresa, other.empresa) && Objects.equals(horario_marcado, other.horario_marcado)
+				&& id == other.id && Objects.equals(itemPedido, other.itemPedido)
+				&& Objects.equals(observacao, other.observacao) && status == other.status
 				&& Double.doubleToLongBits(valor_pedido) == Double.doubleToLongBits(other.valor_pedido);
 	}
+	
+
 	
 	
 	
