@@ -1,10 +1,12 @@
 package com.wapper.dto;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.wapper.model.Cliente;
 import com.wapper.model.Endereco;
+import com.wapper.model.ItemPedido;
 import com.wapper.model.TelefoneCliente;
 
 public class ClienteDTO {
@@ -17,7 +19,7 @@ public class ClienteDTO {
 	private String sexo;
 	private int statusCliente;
 	List<TelefoneCliente> telefoneCliente;
-	List<Endereco> endereco;
+	List<EnderecoDTO> endereco;
 	
 	
 	
@@ -27,7 +29,7 @@ public class ClienteDTO {
 	public ClienteDTO(long idCliente, String nome, String email, Date dataNascimento, String cpf, String sexo,
 		int statusCliente, 
 		List<TelefoneCliente> telefoneCliente, 
-		List<Endereco> endereco) {
+		List<EnderecoDTO> endereco) {
 		this.idCliente = idCliente;
 		this.nome = nome;
 		this.email = email;
@@ -40,6 +42,7 @@ public class ClienteDTO {
 	}
 	
 	public ClienteDTO(Cliente cliente) {
+		List<EnderecoDTO> enderecos = new ArrayList<>();
 		this.idCliente = cliente.getIdCliente();
 		this.nome = cliente.getNome();
 		this.email = cliente.getEmail();
@@ -48,7 +51,13 @@ public class ClienteDTO {
 		this.sexo = cliente.getSexo();
 		this.statusCliente = cliente.getStatusCliente();
 		this.telefoneCliente = cliente.getTelefoneCliente();
-		this.endereco = cliente.getEndereco();
+		
+		
+		for(Endereco item : cliente.getEndereco()) {
+			enderecos.add(new EnderecoDTO(item));
+		}
+		
+		this.endereco = enderecos;
 	}
 	
 	public long getIdCliente() {
@@ -99,12 +108,15 @@ public class ClienteDTO {
 	public void setTelefoneCliente(List<TelefoneCliente> telefoneCliente) {
 		this.telefoneCliente = telefoneCliente;
 	}
-	public List<Endereco> getEndereco() {
+
+	public List<EnderecoDTO> getEndereco() {
 		return endereco;
 	}
-	public void setEndereco(List<Endereco> endereco) {
+
+	public void setEndereco(List<EnderecoDTO> endereco) {
 		this.endereco = endereco;
 	}
+
 	
 	
 }
