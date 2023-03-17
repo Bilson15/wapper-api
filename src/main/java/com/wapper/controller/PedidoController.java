@@ -1,8 +1,8 @@
 package com.wapper.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +31,12 @@ public class PedidoController {
 	
 	
 	@GetMapping(value = "/cliente/{idCliente}", produces = "application/json;charset=UTF-8")
-	public List<PedidoDTO> findAll(
-			@PathVariable(value = "idCliente") long idCliente) throws Exception {
-		return service.findByClienteByIdCliente(idCliente);
+	public Page<PedidoDTO> findAll(
+			@PathVariable(value = "idCliente") long idCliente,
+			@RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "10") int size
+			) throws Exception {
+		return service.findByClienteByIdCliente(PageRequest.of(page, size), idCliente);
 	}
 	
 	
