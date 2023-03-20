@@ -34,7 +34,7 @@ public class PedidoController {
 	public Page<PedidoDTO> findAll(
 			@PathVariable(value = "idCliente") long idCliente,
 			@RequestParam(defaultValue = "0") int page,
-	        @RequestParam(defaultValue = "10") int size
+	        @RequestParam(defaultValue = "3") int size
 			) throws Exception {
 		return service.findByClienteByIdCliente(PageRequest.of(page, size), idCliente);
 	}

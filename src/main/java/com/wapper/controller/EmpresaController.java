@@ -37,6 +37,16 @@ public class EmpresaController {
 	}
 	
 	
+	@GetMapping(value = "/search/{term}", produces = "application/json;charset=UTF-8")
+	public Page<EmpresaHomeDTO> findAll(
+			@PathVariable(value = "term") String term,
+			@RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "20") int size
+	        ) throws Exception {
+		return service.search(PageRequest.of(page, size), term);
+	}
+	
+	
 	@PostMapping
 	public Empresa create(@RequestBody Empresa empresa) {
 		return service.create(empresa);
