@@ -37,9 +37,9 @@ public class EmpresaController {
 	}
 	
 	
-	@GetMapping(value = "/search/{term}", produces = "application/json;charset=UTF-8")
+	@GetMapping(value = "/search", produces = "application/json;charset=UTF-8")
 	public Page<EmpresaHomeDTO> findAll(
-			@PathVariable(value = "term") String term,
+			@RequestParam String term,
 			@RequestParam(defaultValue = "0") int page,
 	        @RequestParam(defaultValue = "20") int size
 	        ) throws Exception {
