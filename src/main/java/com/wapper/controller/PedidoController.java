@@ -18,7 +18,7 @@ import com.wapper.model.Pedido;
 import com.wapper.service.PedidoService;
 
 @RestController
-@RequestMapping("/pedido")
+@RequestMapping("/wapperApi/pedido")
 public class PedidoController {
 	
 	@Autowired

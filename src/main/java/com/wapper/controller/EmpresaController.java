@@ -18,7 +18,7 @@ import com.wapper.model.Empresa;
 import com.wapper.service.EmpresaService;
 
 @RestController
-@RequestMapping("/empresa")
+@RequestMapping("/wapperApi/empresa")
 public class EmpresaController {
 	
 	@Autowired
