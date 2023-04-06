@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.wapper.dto.PedidoDTO;
+import com.wapper.model.Cliente;
 import com.wapper.model.Pedido;
 import com.wapper.repositories.PedidoRepository;
 
@@ -29,8 +30,11 @@ public class PedidoService {
 		return  new ResponseEntity<PedidoDTO>(new PedidoDTO(repository.save(pedido)), HttpStatus.OK);
 	}
 	
-	public List<PedidoDTO> findByClienteByIdCliente(long idCliente) throws Exception {
-		List<Pedido> result = repository.findByClienteByIdCliente(idCliente);
+	public Page<PedidoDTO> findByClienteByIdCliente(Pageable page, long idCliente) throws Exception {
+		
+		Page<Pedido> pedidoPage =  repository.findByClienteByIdCliente(page, idCliente);
+		
+		List<Pedido> result =  pedidoPage.getContent();
 		
 		List<PedidoDTO> dto = new ArrayList<>();
 		for(Pedido pedido : result) {
@@ -38,9 +42,14 @@ public class PedidoService {
 		}	
 		
 		
-		return dto;
-
-      
+        PageRequest pageRequest = PageRequest.of(
+        		page.getPageNumber(),
+                page.getPageSize(),
+                Sort.Direction.ASC,
+                "name");
+        return new PageImpl<>(
+        		dto, 
+                pageRequest, page.getPageSize());
 		
 	}
 

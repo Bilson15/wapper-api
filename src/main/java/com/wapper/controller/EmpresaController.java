@@ -18,7 +18,7 @@ import com.wapper.model.Empresa;
 import com.wapper.service.EmpresaService;
 
 @RestController
-@RequestMapping("/empresa")
+@RequestMapping("/wapperApi/empresa")
 public class EmpresaController {
 	
 	@Autowired
@@ -34,6 +34,16 @@ public class EmpresaController {
 	public Page<EmpresaHomeDTO> findAll(@RequestParam(defaultValue = "0") int page,
 	        @RequestParam(defaultValue = "20") int size) throws Exception {
 		return service.findAll(PageRequest.of(page, size));
+	}
+	
+	
+	@GetMapping(value = "/search", produces = "application/json;charset=UTF-8")
+	public Page<EmpresaHomeDTO> findAll(
+			@RequestParam String term,
+			@RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "20") int size
+	        ) throws Exception {
+		return service.search(PageRequest.of(page, size), term);
 	}
 	
 	

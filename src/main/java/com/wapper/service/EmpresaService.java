@@ -45,6 +45,28 @@ public class EmpresaService {
 		
 	}
 	
+	
+	public Page<EmpresaHomeDTO> search(Pageable page, String term) throws Exception {
+		Page<Empresa> result = repository.findByEmpresaTerm(page, term.toLowerCase());
+		
+		List<Empresa> empresas = result.getContent();
+		List<EmpresaHomeDTO> dto = new ArrayList<>();
+		for(Empresa empresa : empresas) {
+			dto.add(new EmpresaHomeDTO(empresa));
+		}	
+
+        PageRequest pageRequest = PageRequest.of(
+        		page.getPageNumber(),
+                page.getPageSize(),
+                Sort.Direction.ASC,
+                "name");
+        return new PageImpl<>(
+        		dto, 
+                pageRequest, page.getPageSize());
+      
+		
+	}
+	
 	public EmpresaDTO findById(Long id) {
 		
 		Empresa empresa = repository.findById(id).orElseThrow(() ->  new GenericException("Empresa " + id + " não encontrado"));

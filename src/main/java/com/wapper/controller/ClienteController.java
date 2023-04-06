@@ -18,7 +18,7 @@ import com.wapper.model.Cliente;
 import com.wapper.service.ClienteService;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/wapperApi/cliente")
 public class ClienteController {
 	
 	@Autowired
