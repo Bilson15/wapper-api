@@ -9,11 +9,16 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.wapper.dto.ClienteDTO;
 import com.wapper.dto.EmpresaDTO;
 import com.wapper.dto.EmpresaHomeDTO;
+import com.wapper.dto.LoginDTO;
 import com.wapper.exceptions.GenericException;
+import com.wapper.model.Cliente;
 import com.wapper.model.Empresa;
 import com.wapper.repositories.EmpresaRepository;
 
@@ -83,6 +88,20 @@ public class EmpresaService {
 	public void delete(Long id) {
 		Empresa empresaRepo = repository.findById(id).orElseThrow(null);
 		repository.delete(empresaRepo);
+	}
+	
+	
+	public ResponseEntity<EmpresaHomeDTO> login(LoginDTO loginDTO) {
+        Empresa empresa = repository.findByEmail(loginDTO.getEmail());
+        if(empresa == null) {
+            throw new GenericException("E-mail ou senha incorreto");
+        }
+        if(!empresa.getSenha().equals(loginDTO.getSenha())){
+        	 throw new GenericException("E-mail ou senha incorreto");
+        }
+        
+        
+        return new ResponseEntity<EmpresaHomeDTO>(new EmpresaHomeDTO(repository.save(empresa)), HttpStatus.OK);
 	}
 
 }
