@@ -18,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -53,6 +54,11 @@ public class Profissional implements Serializable {
 	private Time fim_atendimento;
 	
 	
+	@ManyToOne
+	@JoinColumn(name="id_empresa")
+	Empresa empresa;
+	
+	
 	  @ManyToMany
 	  @JoinTable(
         name = "servico_profissional",
@@ -76,6 +82,24 @@ public class Profissional implements Serializable {
 	
 	
 	
+
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+
+
+
+
+
+
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+
 
 
 	public Long getId_profissional() {

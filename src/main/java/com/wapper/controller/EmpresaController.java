@@ -1,5 +1,7 @@
 package com.wapper.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,8 +19,11 @@ import com.wapper.dto.ClienteDTO;
 import com.wapper.dto.EmpresaDTO;
 import com.wapper.dto.EmpresaHomeDTO;
 import com.wapper.dto.LoginDTO;
+import com.wapper.dto.ProfissionalDTO;
 import com.wapper.model.Empresa;
+import com.wapper.model.Profissional;
 import com.wapper.service.EmpresaService;
+import com.wapper.service.ProfissionalService;
 
 @RestController
 @RequestMapping("/wapperApi/empresa")
@@ -26,6 +31,9 @@ public class EmpresaController {
 	
 	@Autowired
 	private EmpresaService service;
+	
+	@Autowired
+	private ProfissionalService profissionalService;
 
 	@GetMapping(value = "/{id}", produces = "application/json;charset=UTF-8")
 	public EmpresaDTO findById(@PathVariable(value = "id") Long id) {
@@ -65,4 +73,18 @@ public class EmpresaController {
 	public ResponseEntity<EmpresaHomeDTO> login(@RequestBody LoginDTO loginDTO) throws Exception {
 		return service.login(loginDTO);
 	}
+	
+
+	
+	
+	@GetMapping(value = "/profissional")
+	public List<ProfissionalDTO> findAll() {
+		return profissionalService.findAll();
+	}
+	
+	@PostMapping(value = "/profissional")
+	public Profissional create(@RequestBody Profissional profissional) throws Exception {
+		return profissionalService.create(profissional);
+	}
+	
 }
