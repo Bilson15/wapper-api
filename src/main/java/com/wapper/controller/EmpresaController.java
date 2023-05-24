@@ -77,14 +77,14 @@ public class EmpresaController {
 
 	
 	
-	@GetMapping(value = "/profissional")
-	public List<ProfissionalDTO> findAll() {
-		return profissionalService.findAll();
+	@GetMapping(value = "{idEmpresa}/profissional")
+	public List<ProfissionalDTO> findAll(@PathVariable(value = "idEmpresa") Long id) {
+		return profissionalService.findAllById(id);
 	}
 	
-	@PostMapping(value = "/profissional")
-	public Profissional create(@RequestBody Profissional profissional) throws Exception {
-		return profissionalService.create(profissional);
+	@PostMapping(value = "{idEmpresa}/profissional")
+	public ProfissionalDTO create(@PathVariable(value = "idEmpresa") Long id, @RequestBody Profissional profissional) throws Exception {
+		return profissionalService.create(id ,profissional);
 	}
 	
 }
