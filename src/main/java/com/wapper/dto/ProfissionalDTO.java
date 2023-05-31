@@ -42,7 +42,10 @@ public class ProfissionalDTO {
 		this.status_profissional = profissional.getStatus_profissional();
 		this.inicio_atendimento = profissional.getInicio_atendimento();
 		this.fim_atendimento = profissional.getFim_atendimento();
-		this.empresa = new EmpresaBasicDTO(profissional.getEmpresa());
+		if(profissional.getEmpresa() != null) {
+			this.empresa = new EmpresaBasicDTO(profissional.getEmpresa());
+		}
+		
 	}
 	
 	

@@ -36,11 +36,13 @@ public class EmpresaDTO {
 	
 
 	public EmpresaDTO(Empresa empresa) {
+
 		List<EnderecoDTO> enderecos = new ArrayList<>();
 		List<ServicoDTO> servicos = new ArrayList<>();
 		
 		
 		this.id = empresa.getId();
+		
 		this.razaoSocial = empresa.getRazaoSocial();
 		this.email = empresa.getEmail();
 		this.dataFundacao = empresa.getDataFundacao();
@@ -49,17 +51,23 @@ public class EmpresaDTO {
 		this.statusEmpresa = empresa.getStatusEmpresa();
 		this.telefoneCliente = empresa.getTelefoneCliente();
 		
+		
 		for(Endereco endereco : empresa.getEndereco()) {
 			enderecos.add(new EnderecoDTO(endereco));
 		}
 		this.endereco = enderecos ;
+		
+	
 		
 		
 		
 		for(Servico servico : empresa.getServico()) {
 			servicos.add(new ServicoDTO(servico));
 		}
+
 		this.servico = servicos;
+		
+
 	}
 
 	public long getId() {

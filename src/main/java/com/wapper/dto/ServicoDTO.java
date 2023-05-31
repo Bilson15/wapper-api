@@ -48,11 +48,13 @@ public class ServicoDTO {
 		this.tempo = servico.getTempo();
 		this.status = servico.getStatus();
 		
-		for(Profissional profissional : servico.getProfissional()) {
-			profissionais.add(new ProfissionalDTO(profissional));
+		if(servico.getProfissional() != null) {
+			for(Profissional profissional : servico.getProfissional()) {
+				profissionais.add(new ProfissionalDTO(profissional));
+			}
+			
+			this.profissional =  profissionais;
 		}
-		
-		this.profissional =  profissionais;
 		
 	}
 	

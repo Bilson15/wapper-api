@@ -59,18 +59,8 @@ public class Profissional implements Serializable {
 	Empresa empresa;
 	
 	
-	  @ManyToMany
-	  @JoinTable(
-        name = "servico_profissional",
-        joinColumns = @JoinColumn(
-                name = "id_profissional"
-        		),
-        inverseJoinColumns = @JoinColumn(
-                name = "id_servico"
-        		)
-		)
-		@JsonIgnore
-		  private List<Servico> servico;
+	@ManyToMany(mappedBy = "profissional")
+	private List<Servico> servico;
 
 	
 	

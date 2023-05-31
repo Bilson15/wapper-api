@@ -11,7 +11,7 @@ import com.wapper.model.Profissional;
 @Repository
 public interface ProfissionalRepository extends JpaRepository<Profissional, Long>{
 
-	@Query(value = "SELECT * FROM profissional  WHERE profissional.id_empresa = :id", nativeQuery = true)
+	@Query(value = "SELECT * FROM profissional  WHERE profissional.id_empresa = :id ORDER BY profissional.id_profissional DESC", nativeQuery = true)
 	List<Profissional> findAllById(Long id);
 
 }

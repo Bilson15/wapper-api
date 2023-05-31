@@ -15,15 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wapper.dto.ClienteDTO;
 import com.wapper.dto.EmpresaDTO;
 import com.wapper.dto.EmpresaHomeDTO;
 import com.wapper.dto.LoginDTO;
 import com.wapper.dto.ProfissionalDTO;
+import com.wapper.dto.ServicoDTO;
 import com.wapper.model.Empresa;
 import com.wapper.model.Profissional;
+import com.wapper.model.Servico;
 import com.wapper.service.EmpresaService;
 import com.wapper.service.ProfissionalService;
+import com.wapper.service.ServicoService;
 
 @RestController
 @RequestMapping("/wapperApi/empresa")
@@ -34,6 +36,9 @@ public class EmpresaController {
 	
 	@Autowired
 	private ProfissionalService profissionalService;
+	
+	@Autowired
+	private ServicoService ServicoService;
 
 	@GetMapping(value = "/{id}", produces = "application/json;charset=UTF-8")
 	public EmpresaDTO findById(@PathVariable(value = "id") Long id) {
@@ -78,13 +83,24 @@ public class EmpresaController {
 	
 	
 	@GetMapping(value = "{idEmpresa}/profissional")
-	public List<ProfissionalDTO> findAll(@PathVariable(value = "idEmpresa") Long id) {
+	public List<ProfissionalDTO> findAllProfissional(@PathVariable(value = "idEmpresa") Long id) {
 		return profissionalService.findAllById(id);
 	}
 	
 	@PostMapping(value = "{idEmpresa}/profissional")
 	public ProfissionalDTO create(@PathVariable(value = "idEmpresa") Long id, @RequestBody Profissional profissional) throws Exception {
 		return profissionalService.create(id ,profissional);
+	}
+	
+	
+	@GetMapping(value = "{idServico}/servico")
+	public List<ServicoDTO> findAllService(@PathVariable(value = "idServico") Long id) {
+		return ServicoService.findAllById(id);
+	}
+	
+	@PostMapping(value = "{idEmpresa}/servico")
+	public ServicoDTO create(@PathVariable(value = "idEmpresa") Long id, @RequestBody Servico servico) throws Exception {
+		return ServicoService.create(servico, id);
 	}
 	
 }
