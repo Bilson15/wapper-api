@@ -10,16 +10,16 @@ public class ItemPedidoDTO {
 	
 	private double valor_item;
 	
-	private Servico servico;
+	private ServicoDTO servico;
 	
-	private Profissional profissional;
+	private ProfissionalDTO profissional;
 	
 	
 	public ItemPedidoDTO() {
 
 	}
 
-	public ItemPedidoDTO(int id_pedido, double valor_item, Servico servico, Profissional profissional) {
+	public ItemPedidoDTO(int id_pedido, double valor_item, ServicoDTO servico, ProfissionalDTO profissional) {
 		this.id_item_pedido = id_pedido;
 		this.valor_item = valor_item;
 		this.servico = servico;
@@ -29,8 +29,8 @@ public class ItemPedidoDTO {
 	public ItemPedidoDTO(ItemPedido itemPedido) {
 		this.id_item_pedido = itemPedido.getId_item_pedido();
 		this.valor_item = itemPedido.getValor_item();
-		this.servico = itemPedido.getServico();
-		this.profissional = itemPedido.getProfissional();
+		this.servico =  new ServicoDTO(itemPedido.getServico());
+		this.profissional = new ProfissionalDTO(itemPedido.getProfissional());
 	}
 	
 
@@ -51,19 +51,19 @@ public class ItemPedidoDTO {
 		this.valor_item = valor_item;
 	}
 
-	public Servico getServico() {
+	public ServicoDTO getServico() {
 		return servico;
 	}
 
-	public void setServico(Servico servico) {
+	public void setServico(ServicoDTO servico) {
 		this.servico = servico;
 	}
 
-	public Profissional getProfissional() {
+	public ProfissionalDTO getProfissional() {
 		return profissional;
 	}
 
-	public void setProfissional(Profissional profissional) {
+	public void setProfissional(ProfissionalDTO profissional) {
 		this.profissional = profissional;
 	}
 	

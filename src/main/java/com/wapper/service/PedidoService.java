@@ -52,5 +52,47 @@ public class PedidoService {
                 pageRequest, page.getPageSize());
 		
 	}
+	
+	
+	public Page<PedidoDTO> findByEmpresaByIdEmpresa(Pageable page, long idEmpresa) throws Exception {
+		
+		Page<Pedido> pedidoPage =  repository.findByEmpresaByIdEmpresa(page, idEmpresa);
+		
+		List<Pedido> result =  pedidoPage.getContent();
+		
+		List<PedidoDTO> dto = new ArrayList<>();
+		for(Pedido pedido : result) {
+			dto.add(new PedidoDTO(pedido));
+		}	
+		
+		
+        PageRequest pageRequest = PageRequest.of(
+        		page.getPageNumber(),
+                page.getPageSize(),
+                Sort.Direction.ASC,
+                "name");
+        return new PageImpl<>(
+        		dto, 
+                pageRequest, page.getPageSize());
+		
+	}
+	
+	
+	public PedidoDTO cancelarPedido(long idEmpresa) throws Exception {
+		
+		Pedido pedido =  repository.findById(idEmpresa).get();
+		pedido.setStatus(2);
+
+        return new PedidoDTO(repository.save(pedido));
+	}
+	
+	
+	public PedidoDTO confirmarPedido(long idEmpresa) throws Exception {
+		
+		Pedido pedido =  repository.findById(idEmpresa).get();
+		pedido.setStatus(1);
+
+        return new PedidoDTO(repository.save(pedido));
+	}
 
 }

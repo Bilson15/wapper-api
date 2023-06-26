@@ -18,6 +18,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -55,12 +56,21 @@ public class Servico implements Serializable {
 	@NotNull
 	private int status;
 	
-	@JsonBackReference
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="id_empresa")
 	private Empresa empresa;
 	
-	@ManyToMany(mappedBy = "servico")
+
+	@ManyToMany
+	@JoinTable(
+	name = "servico_profissional",
+	joinColumns = @JoinColumn(
+	        name = "id_servico"
+			),
+	inverseJoinColumns = @JoinColumn(
+	        name = "id_profissional"
+			)
+	)
 	private List<Profissional> profissional;
 	
 	

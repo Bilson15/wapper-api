@@ -1,17 +1,13 @@
 package com.wapper.dto;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import com.wapper.model.Empresa;
-import com.wapper.model.Endereco;
-import com.wapper.model.ItemPedido;
-import com.wapper.model.Servico;
-import com.wapper.model.TelefoneCliente;
 
-public class EmpresaDTO {
+public class EmpresaBasicDTO {
 
+	
 	private long id;
 	
 	private String razaoSocial;
@@ -25,50 +21,19 @@ public class EmpresaDTO {
 	private String ramoAtividade;
 
 	private int statusEmpresa;
-
-	private List<TelefoneCliente> telefoneCliente;
-
-	private List<EnderecoDTO> endereco;
-
-	private List<ServicoDTO> servico;
 	
 	
-	
-
-	public EmpresaDTO(Empresa empresa) {
-
-		List<EnderecoDTO> enderecos = new ArrayList<>();
-		List<ServicoDTO> servicos = new ArrayList<>();
-		
-		
+	public EmpresaBasicDTO(Empresa empresa) {
 		this.id = empresa.getId();
-		
 		this.razaoSocial = empresa.getRazaoSocial();
 		this.email = empresa.getEmail();
 		this.dataFundacao = empresa.getDataFundacao();
 		this.cnpj = empresa.getCnpj();
 		this.ramoAtividade = empresa.getRamoAtividade();
 		this.statusEmpresa = empresa.getStatusEmpresa();
-		this.telefoneCliente = empresa.getTelefoneCliente();
-		
-		
-		for(Endereco endereco : empresa.getEndereco()) {
-			enderecos.add(new EnderecoDTO(endereco));
-		}
-		this.endereco = enderecos ;
-		
-	
-		
-		
-		
-		for(Servico servico : empresa.getServico()) {
-			servicos.add(new ServicoDTO(servico));
-		}
-
-		this.servico = servicos;
-		
-
 	}
+
+	
 
 	public long getId() {
 		return id;
@@ -125,32 +90,9 @@ public class EmpresaDTO {
 	public void setStatusEmpresa(int statusEmpresa) {
 		this.statusEmpresa = statusEmpresa;
 	}
-
-	public List<TelefoneCliente> getTelefoneCliente() {
-		return telefoneCliente;
-	}
-
-	public void setTelefoneCliente(List<TelefoneCliente> telefoneCliente) {
-		this.telefoneCliente = telefoneCliente;
-	}
-
-
-
-	public List<EnderecoDTO> getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(List<EnderecoDTO> endereco) {
-		this.endereco = endereco;
-	}
-
-	public List<ServicoDTO> getServico() {
-		return servico;
-	}
-
-	public void setServico(List<ServicoDTO> servico) {
-		this.servico = servico;
-	}
+	
+	
 	
 	
 }
+

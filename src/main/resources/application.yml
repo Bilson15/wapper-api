@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ------
-    username: ------
-    password: ------
+    url: jdbc:postgresql://localhost:5432/wapper-db
+    username: postgres
+    password: 3588Wapper*
   jpa:
     hibernate: 
       ddl-auto: none

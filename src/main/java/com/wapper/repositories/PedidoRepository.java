@@ -15,5 +15,8 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 	
 	@Query(value = "SELECT * FROM pedido  WHERE pedido.id_cliente = ?1 ORDER BY pedido.id_pedido DESC", nativeQuery = true)
 	Page<Pedido> findByClienteByIdCliente(Pageable pageable, long idCliente);
+	
+	@Query(value = "SELECT * FROM pedido  WHERE pedido.id_empresa = ?1 ORDER BY pedido.status ASC, pedido.id_pedido DESC", nativeQuery = true)
+	Page<Pedido> findByEmpresaByIdEmpresa(Pageable pageable, long idEmpresa);
 
 }

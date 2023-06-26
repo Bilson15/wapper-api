@@ -59,6 +59,7 @@ public class PedidoDTO {
 		this.status = pedido.getStatus();
 		this.empresa = new EmpresaDTO(pedido.getEmpresa());
 		
+		
 		for(ItemPedido item : pedido.getItemPedido()) {
 			items.add(new ItemPedidoDTO(item));
 		}
